@@ -7,7 +7,7 @@ public class FileService
     public IEnumerable<FileModel> Scan(string? path = null)
     {
         var dir = path ?? Directory.GetCurrentDirectory();
-        foreach (var filePath in Directory.EnumerateFiles(dir))
+        foreach (var filePath in Directory.EnumerateFiles(dir, "*", SearchOption.AllDirectories))
         {
             var info = new FileInfo(filePath);
             yield return new FileModel()
