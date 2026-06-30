@@ -2,11 +2,11 @@
 
 public sealed record FileModel
 {
-    public string Name { get; init; }
-    public string Author { get; init; }
+    public required string Name { get; init; }
+    public required string Author { get; init; }
     public DateTime CreatedDate { get; init; }
-    public string Extension { get; init; }
+    public required string Extension { get; init; }
     public long Size { get; init; }
-    public string Location { get; init; }
+    public required string Location { get; init; }
     public FileCategory FileCategory { get; init; }
 }
