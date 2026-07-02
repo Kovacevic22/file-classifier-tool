@@ -23,7 +23,6 @@ class Program
             {
                 case "-s" or "--scan":
                     scanFlag = true;
-                    if(args.Length > i + 1 || args[i + 1].StartsWith('-')) source = args[++i];
                     break;
                 case "-d" or "--destination":
                     if (i + 1 >= args.Length || args[i + 1].StartsWith('-'))
