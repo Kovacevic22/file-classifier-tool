@@ -19,7 +19,7 @@ public static class FileService
             yield return new FileModel()
             {
                 Name =  info.Name,
-                Author = Environment.MachineName,
+                Author = Environment.UserName,
                 CreatedDate = info.CreationTime,
                 Extension = info.Extension,
                 Size = info.Length,
@@ -33,7 +33,8 @@ public static class FileService
     {
         var sourceDir = Path.GetFullPath(source ?? Directory.GetCurrentDirectory());
         var destDir = Path.GetFullPath(destinationRoot);
-        if (sourceDir == destDir)
+        var sourceWithSeparator = sourceDir.EndsWith(Path.DirectorySeparatorChar)? sourceDir : sourceDir + Path.DirectorySeparatorChar;
+        if (destDir.Equals(sourceDir, StringComparison.OrdinalIgnoreCase) || destDir.StartsWith(sourceWithSeparator, StringComparison.OrdinalIgnoreCase))
             throw new InvalidOperationException("Source and destination cannot be in the same directory");   
         var files = Scan(source);
         var count = 0;
