@@ -6,28 +6,37 @@ CLI tool for scanning and organizing files into categories (Images, Documents, E
 
 | OS | Download |
 |----|----------|
-| Windows | [file-classifier-win-x64.zip](https://github.com/Kovacevic22/file-classifier-tool/releases/download/v1.0.1/file-classifier-win-x64.zip) |
-| Linux | [file-classifier-linux-x64.zip](https://github.com/Kovacevic22/file-classifier-tool/releases/download/v1.0.1/file-classifier-linux-x64.zip) |
-| macOS | [file-classifier-osx-x64.zip](https://github.com/Kovacevic22/file-classifier-tool/releases/download/v1.0.1/file-classifier-osx-x64.zip) |
+| Windows | [file-classifier-win-x64.zip](https://github.com/Kovacevic22/file-classifier-tool/releases/download/v1.0.0/FileClassifier-windows-x64.zip) |
+| Linux | [file-classifier-linux-x64.zip](https://github.com/Kovacevic22/file-classifier-tool/releases/download/v1.0.0/FileClassifier-linux-x64.zip) |
+| macOS | [file-classifier-osx-x64.zip](https://github.com/Kovacevic22/file-classifier-tool/releases/download/v1.0.0/FileClassifier-osx-arm64.zip) |
 
 ## Usage
 
-```bash
-# Organize current folder into destination
-file-classifier [destination]
+The tool uses flexible flags, meaning **the order of arguments does not matter**.
 
-# Organize specific folder into destination
-file-classifier [destination] [source]
-```
+### Available Options
+* `-h`, `--help` - Show help menu.
+* `-s`, `--scan` - Scan and print files from the directory.
+* `-sr`, `--source <path>` - Specify the source directory (optional, defaults to the current directory).
+* `-d`, `--destination <path>` - Specify the destination directory where files will be organized.
 
 ### Examples
 
 ```bash
-# Windows
-FileClassifier.CLI.exe file-classifier C:\Organized C:\Downloads
+# Show help menu
+./FileClassifier.CLI --help
 
-# Linux/macOS
-./FileClassifier.CLI file-classifier /home/user/Organized /home/user/Downloads
+# Scan current folder
+./FileClassifier.CLI --scan
+
+# Scan a specific folder
+./FileClassifier.CLI --scan --source /path/to/source
+
+# Organize specific source into destination (Requires user confirmation)
+./FileClassifier.CLI --destination /path/to/dest --source /path/to/source
+
+# Organize current folder into destination (Order doesn't matter)
+./FileClassifier.CLI -d /path/to/dest
 ```
 
 ## Categories
@@ -41,41 +50,41 @@ Files are organized into folders based on extension:
 | Executable | .exe, .bat |
 | Unknown | everything else |
 
-## Running via .NET (developer)
+## Getting Started (Development)
 
-#1
+Follow these steps to set up, build, and run the project locally on your machine.
+
+### Prerequisites
+* [.NET 8.0 SDK](https://microsoft.com) (or newer)
+
+### 1. Clone the Repository
 ```bash
-# Clone the repository
 git clone https://github.com/Kovacevic22/file-classifier-tool.git
+cd file-classifier-tool
 ```
-#2
+
+### 2. Build the Project
 ```bash
-# Build the project from the root directory
 dotnet build
 ```
-#3
+
+### 3. Run Locally
 ```bash
-# Navigate to the FileClassifier.CLI project directory
+# Navigate to the CLI project
 cd FileClassifier.CLI
 
-# Run the application using following command
-dotnet run -- file-classifier [destination] [source]
+# Run the help command
+dotnet run -- --help
+
+# Run scanning on a specific folder
+dotnet run -- --scan --source /path/to/folder
 ```
+*Note: The `--` separator is required to pass flags directly to the CLI application rather than the `dotnet` tooling itself.*
 
-### Arguments Configuration
-
-*   `[destination]` (Output): The path to an existing folder where the tool will create the category subfolders (`Images`, `Documents`, `Executables`, `Unknown`) and move the sorted files.
-*   `[source]` (Input - Optional): The path to the folder containing the unorganized files you want to scan. If you don't provide a source path, the default path is the folder you are currently in.
-
-#### Examples
-
-#1. Organizing a specific source folder:
+### 4. Publish (Create Executable)
+To generate a single, self-contained executable file for your specific OS:
 ```bash
-dotnet run -- file-classifier "C:\MyTargetFolder" "C:\Users\Name\Downloads"
+dotnet publish -c Release -r linux-x64 --self-contained
 ```
-
-#2. Organizing the current folder:
-```bash
-dotnet run -- file-classifier "C:\MyTargetFolder"
-```
+*(Replace `linux-x64` with `win-x64` for Windows or `osx-arm64` for Apple Silicon macOS).*
 

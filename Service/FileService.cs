@@ -2,12 +2,18 @@
 
 namespace Service;
 
-public class FileService
+public static class FileService
 {
-    public IEnumerable<FileModel> Scan(string? path = null)
+    public static IEnumerable<FileModel> Scan(string? path = null)
     {
         var dir = path ?? Directory.GetCurrentDirectory();
-        foreach (var filePath in Directory.EnumerateFiles(dir, "*", SearchOption.AllDirectories))
+        var options = new EnumerationOptions()
+        {
+            RecurseSubdirectories = true,
+            IgnoreInaccessible = true,
+            AttributesToSkip = FileAttributes.System | FileAttributes.Hidden,
+        };
+        foreach (var filePath in Directory.EnumerateFiles(dir, "*", options))
         {
             var info = new FileInfo(filePath);
             yield return new FileModel()
@@ -23,7 +29,7 @@ public class FileService
         }
     }
 
-    public int Organise(string? source, string destinationRoot)
+    public static int Organise(string? source, string destinationRoot)
     {
         var sourceDir = Path.GetFullPath(source ?? Directory.GetCurrentDirectory());
         var destDir = Path.GetFullPath(destinationRoot);
