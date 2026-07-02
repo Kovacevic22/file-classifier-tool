@@ -41,11 +41,30 @@ public static class FileService
         {
             var categoryFolder = Path.Combine(destinationRoot, file.FileCategory.ToString());
             Directory.CreateDirectory(categoryFolder);
-            var destinationPath = Path.Combine(categoryFolder, file.Name);
-            File.Copy(file.Location, destinationPath, true);
+            var destinationPath = UniquePath(Path.Combine(categoryFolder, file.Name));
+            File.Copy(file.Location, destinationPath, false);
             ++count;
         }
 
         return count;
+    }
+    
+    
+    //====================================Additional functions=======================================================//
+    private static string UniquePath(string path)
+    {
+        if (!File.Exists(path)) return path;
+        var dir = Path.GetDirectoryName(path);
+        if(!Directory.Exists(dir)) throw new DirectoryNotFoundException("Directory not found");
+        var fileName =  Path.GetFileNameWithoutExtension(path);
+        var fileExtension = Path.GetExtension(path);
+        var i = 1;
+        string candidate;
+        do
+        {
+            candidate = Path.Combine(dir, $"{fileName} ({i}){fileExtension}");
+            ++i;
+        } while (File.Exists(candidate));
+        return candidate;
     }
 }

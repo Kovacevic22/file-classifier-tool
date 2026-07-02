@@ -9,7 +9,7 @@ class Program
     {
         if (args.Length == 0 || args[0] == "-h" || args[0] == "--help")
         {
-            HelperFunctions.ShowHelp();
+            ConsoleMessages.ShowHelp();
             return;
         }
         
@@ -27,7 +27,7 @@ class Program
                 case "-d" or "--destination":
                     if (i + 1 >= args.Length || args[i + 1].StartsWith('-'))
                     {
-                        HelperFunctions.MissingPathError($"{args[i]}");
+                        ConsoleMessages.MissingPathError($"{args[i]}");
                         return;
                     }
                     destination = args[++i];
@@ -35,60 +35,54 @@ class Program
                 case "-sr" or "--source":
                     if (i + 1 >= args.Length || args[i + 1].StartsWith('-'))
                     {
-                        HelperFunctions.MissingPathError($"{args[i]}");
+                        ConsoleMessages.MissingPathError($"{args[i]}");
                         return;
                     }
                     source = args[++i];
                     break;
                 default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Unknown option {args[i]}. Please specify a valid option.");
-                    Console.ResetColor();
+                    ConsoleMessages.PrintError($"Unknown option {args[i]}. Please specify a valid option.");
                     return;
             }
         }
 
         if (!scanFlag && destination == null)
         {
-            HelperFunctions.PrintError($"Please specify a valid destination.");
+            ConsoleMessages.PrintError($"Please specify a valid destination.");
             Console.WriteLine();
-            HelperFunctions.ShowHelp();
+            ConsoleMessages.ShowHelp();
         }
         else if (scanFlag)
         {
             try
             {
                 var scannedFiles = FileService.Scan(source);
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.ResetColor();
-
-                HelperFunctions.PrintAll(scannedFiles);
+                FileModelFormatter.PrintAll(scannedFiles);
             }catch(Exception e)
             {
-                HelperFunctions.PrintError(e.Message);
+                ConsoleMessages.PrintError(e.Message);
             }
         }
         else if(destination != null)
         {
             try
             {
-                Console.WriteLine($"Please type (yes or y) if you want to organise files to the {destination}.");
+                ConsoleMessages.PrintPrompt($"Please type (yes or y) if you want to organise files to the {destination}.");
                 string? key = Console.ReadLine();
                 if (key is "y" or "yes")
                 {
+                    ConsoleMessages.PrintInfo($"Files copying to {destination}...");
                     var count = FileService.Organise(source, destination);
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"Files copying to {destination}...");
-                    Console.ResetColor();
-                    Console.WriteLine($"Organised {count} file(s).");
+                    ConsoleMessages.PrintInfo($"Organised {count} file(s).");
                 }
                 else
                 {
                     Console.WriteLine("You gave up on transferring the files.");
+                    
                 }
             }catch(Exception e)
             {
-                HelperFunctions.PrintError(e.Message);
+                ConsoleMessages.PrintError(e.Message);
             }
         }
     }
