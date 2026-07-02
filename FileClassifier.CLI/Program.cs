@@ -42,8 +42,10 @@ class Program
                     source = args[++i];
                     break;
                 default:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Unknown option {args[i]}. Please specify a valid option.");
-                    break;
+                    Console.ResetColor();
+                    return;
             }
         }
 
@@ -67,7 +69,7 @@ class Program
             {
                 Console.WriteLine($"Please type (yes or y) if you want to organise files to the {destination}.");
                 string? key = Console.ReadLine();
-                if (key == "y" || key == "yes")
+                if (key is "y" or "yes")
                 {
                     var count = FileService.Organise(source, destination);
                     Console.ForegroundColor = ConsoleColor.Yellow;
