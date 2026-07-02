@@ -27,7 +27,7 @@ class Program
                 case "-d" or "--destination":
                     if (i + 1 >= args.Length || args[i + 1].StartsWith('-'))
                     {
-                        HelperFunctions.MissingArgumentError($"{args[i]}");
+                        HelperFunctions.MissingPathError($"{args[i]}");
                         return;
                     }
                     destination = args[++i];
@@ -35,7 +35,7 @@ class Program
                 case "-sr" or "--source":
                     if (i + 1 >= args.Length || args[i + 1].StartsWith('-'))
                     {
-                        HelperFunctions.MissingArgumentError($"{args[i]}");
+                        HelperFunctions.MissingPathError($"{args[i]}");
                         return;
                     }
                     source = args[++i];
@@ -48,7 +48,13 @@ class Program
             }
         }
 
-        if (scanFlag)
+        if (!scanFlag && destination == null)
+        {
+            HelperFunctions.PrintError($"Please specify a valid destination.");
+            Console.WriteLine();
+            HelperFunctions.ShowHelp();
+        }
+        else if (scanFlag)
         {
             try
             {

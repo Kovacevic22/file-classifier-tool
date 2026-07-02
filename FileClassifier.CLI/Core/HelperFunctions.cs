@@ -69,7 +69,7 @@ public static class HelperFunctions
         }
     }
 
-    public static void MissingArgumentError(string flag)
+    public static void MissingPathError(string flag)
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine($"Error: {flag} requires a path.");
