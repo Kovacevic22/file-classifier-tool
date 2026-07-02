@@ -40,3 +40,12 @@ Files are organized into folders based on extension:
 | Document | .doc, .docx, .pdf, .ppt, .pptx |
 | Executable | .exe, .bat |
 | Unknown | everything else |
+
+### 
+
+First step - clone repo
+
+```bash
+git clone https://github.com/Kovacevic22/file-classifier-tool.git
+```
+
