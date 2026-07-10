@@ -24,9 +24,8 @@ public static class FileModelFormatter
     }
     public static void PrintAll(IEnumerable<FileModel> files)
     {
-        var fileList = files.ToList();
         PrintHeader();
-        foreach (var file in fileList)
+        foreach (var file in files)
         {
             ToLine(file);
         }
