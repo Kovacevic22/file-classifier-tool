@@ -6,9 +6,8 @@ CLI tool for scanning and organizing files into categories (Images, Documents, E
 
 | OS | Download |
 |----|----------|
-| Windows | [file-classifier-win-x64.zip](https://github.com/Kovacevic22/file-classifier-tool/releases/download/v1.0.0/FileClassifier-windows-x64.zip) |
-| Linux | [file-classifier-linux-x64.zip](https://github.com/Kovacevic22/file-classifier-tool/releases/download/v1.0.0/FileClassifier-linux-x64.zip) |
-| macOS | [file-classifier-osx-x64.zip](https://github.com/Kovacevic22/file-classifier-tool/releases/download/v1.0.0/FileClassifier-osx-arm64.zip) |
+| Windows | [file-classifier-win-x64](https://github.com/Kovacevic22/file-classifier-tool/releases/download/v1.0.0/FileClassifier.CLI.exe) |
+| Linux | [file-classifier-linux-x64](https://github.com/Kovacevic22/file-classifier-tool/releases/download/v1.0.0/FileClassifier.CLI) |
 
 ## Usage
 
