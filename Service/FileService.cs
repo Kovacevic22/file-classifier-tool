@@ -38,13 +38,24 @@ public static class FileService
             throw new InvalidOperationException("Source and destination cannot be in the same directory");   
         var files = Scan(source);
         var count = 0;
+        var createdDirectories = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var file in files)
         {
-            var categoryFolder = Path.Combine(destinationRoot, file.FileCategory.ToString());
-            Directory.CreateDirectory(categoryFolder);
-            var destinationPath = UniquePath(Path.Combine(categoryFolder, file.Name));
-            File.Copy(file.Location, destinationPath, false);
-            ++count;
+            var categoryFolder = Path.Combine(destDir, file.FileCategory.ToString());
+            if (createdDirectories.Add(categoryFolder))
+            {
+                Directory.CreateDirectory(categoryFolder);
+            }
+            var destinationPath = UniquePath(Path.Combine(categoryFolder, file.Name));    
+            try 
+            {
+                File.Move(file.Location, destinationPath, false);
+                ++count;
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine($"Failed to move {file.Location}: {e.Message}");
+            }
         }
 
         return count;
