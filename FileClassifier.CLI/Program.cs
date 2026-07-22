@@ -69,6 +69,7 @@ class Program
             {
                 ConsoleMessages.PrintPrompt($"Please type (yes or y) if you want to organise files to the {destination}.");
                 string? key = Console.ReadLine();
+                key = key?.Trim().ToLower();
                 if (key is "y" or "yes")
                 {
                     ConsoleMessages.PrintInfo($"Files copying to {destination}...");
